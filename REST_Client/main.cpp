@@ -51,8 +51,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 				SendMessage(vControls[AREA_RESPONSE], WM_SETTEXT, NULL, (LPARAM)L"Waiting...");
 			} else if (Msg.lParam == THREAD_STATUS_RECEIVING_RESPONSE) {
 				SendMessage(vControls[AREA_RESPONSE], WM_SETTEXT, NULL, (LPARAM)L"Receiving response...");
-			}
-			if (gThreadBool) {
+			} else if (Msg.lParam == THREAD_STATUS_DONE && gThreadBool) {
 				SendMessage(vControls[AREA_RESPONSE], WM_SETTEXT, NULL, (LPARAM)gThreadResponse.c_str());
 				gThreadBool = false;
 				gCanSend = true;

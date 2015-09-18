@@ -1,3 +1,21 @@
 request sent
-Closed socket descriptor 868
+Closed socket descriptor 852
+request sent
+Closed socket descriptor 832
+request sent
+Closed socket descriptor 860
+request sent
+Closed socket descriptor 876
+request sent
+Closed socket descriptor 872
+request sent
+Closed socket descriptor 852
+request sent
+Closed socket descriptor 904
+request sent
+Closed socket descriptor -858993460
+request sent
+Closed socket descriptor 884
+request sent
+Closed socket descriptor -858993460
 Request Sender with parentID 101 was deleted.

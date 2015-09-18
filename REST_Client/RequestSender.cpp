@@ -23,7 +23,7 @@ void WINAPI RequestSender::sendRequest(std::string dstURL, std::atomic<bool>& th
 		/*----------------*/
 		mtx.unlock();
 
-		DWORD msgSuccess = PostThreadMessage(parentThread, SET_RESPONSE_TEXT, NULL, NULL);
+		DWORD msgSuccess = PostThreadMessage(parentThread, SET_RESPONSE_TEXT, NULL, (LPARAM)THREAD_STATUS_DONE);
 		if (msgSuccess == NULL){ //PostThreadMessage returns 0 if the message cannot be sent
 			mtx.lock();
 			/*----------------*/
