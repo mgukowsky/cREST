@@ -1,4 +1,0 @@
-Error retrieving DNS information for fsdksdfkldsfsdjfkjlsdf
-getaddrinfo error: 008DC8B0
-Error retrieving DNS information for www.github.com/mgukowsky
-getaddrinfo error: 008DC8B0
