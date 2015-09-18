@@ -17,14 +17,14 @@ void WINAPI RequestSender::sendRequest(std::string dstURL, std::atomic<bool>& th
 
 		mtx.lock();
 		/*----------------*/
-		response = tmp.fireRequest(settings);
+		response = tmp.fireRequest(settings, parentThread);
 		std::cout << "request sent\n";
 		threadBool = true;
 		/*----------------*/
 		mtx.unlock();
 
-		DWORD i = PostThreadMessage(parentThread, SET_RESPONSE_TEXT, NULL, NULL);
-		if (i == NULL){ //PostThreadMessage returns 0 if the message cannot be sent
+		DWORD msgSuccess = PostThreadMessage(parentThread, SET_RESPONSE_TEXT, NULL, NULL);
+		if (msgSuccess == NULL){ //PostThreadMessage returns 0 if the message cannot be sent
 			mtx.lock();
 			/*----------------*/
 			std::cerr << "Error communicating with parent thread" << std::endl;

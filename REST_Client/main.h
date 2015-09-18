@@ -32,6 +32,7 @@ OptionHandler gOptions;
 WSADATA wsaData;
 
 HGDIOBJ hDefaultFont;
+HBRUSH gHBRBackground;
 
 std::atomic<bool> gThreadBool = false;
 std::wstring gThreadResponse;
@@ -41,6 +42,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
 
 bool WINAPI setup_window(HWND hwnd, HGDIOBJ hFont);
 void WINAPI handleCommand(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam);
-void WINAPI paintText(HWND hwnd, HGDIOBJ hFont);
+void WINAPI handleRadioBtn(HWND hwnd, int methodID, const char* methodVal, DWORD resourceID);
+void WINAPI paintText(HWND hwnd);
 
 #endif

@@ -2,13 +2,9 @@
 
 WINAPI HTTPSocket::HTTPSocket(std::string url) 
 	:_url(url)
-{
-	//std::unique_ptr<hostent> host(gethostbyname(url)); //Use unique_ptr to clean up the results of gethostbyname() automatically
-	
+{	
 	SecureZeroMemory(&_hints, sizeof(addrinfo));
 	SecureZeroMemory(&_client, sizeof(addrinfo));
-	//_hints.ai_family = AF_INET;
-	//_hints.ai_socktype = SOCK_STREAM;
 
 	int status = getaddrinfo(_url.c_str(), "http", &_hints, &_client);
 
@@ -27,13 +23,15 @@ WINAPI HTTPSocket::~HTTPSocket() {
 	std::cout << "Closed socket descriptor " << descriptor << std::endl;
 }
 
-std::wstring WINAPI HTTPSocket::fireRequest(const OptionHandler& settings) {
-	if (!_readyToFire) { return L"ERROR"; } //Stop if we had a DNS error
+std::wstring WINAPI HTTPSocket::fireRequest(const OptionHandler& settings, const DWORD parentThread) {
+	if (!_readyToFire) { return L"ERROR: DNS lookup failed."; } //Stop if we had a DNS error
 
 	char buf; //Use a 1 character buffer to avoid trash in the output
 	addrinfo *p;
 	std::stringstream ssReq;
-	std::wstringstream ssRes;
+	std::wstringstream ssRes, ssOutput;
+
+	PostThreadMessage(parentThread, SET_RESPONSE_TEXT, NULL, (LPARAM)THREAD_STATUS_CONNECTING);
 
 	//Go through all the addresses returned by the DNS
 	//http://beej.us/guide/bgnet/output/html/singlepage/bgnet.html#simpleclient
@@ -54,15 +52,17 @@ std::wstring WINAPI HTTPSocket::fireRequest(const OptionHandler& settings) {
 
 	if (p == NULL) { //We've reached the end of the linked list and still nothing.
 		std::cerr << "Unable to connect to socket " << _sock << std::endl;
-		return L"ERROR";
+		return L"ERROR: Could not establish connection to host.";
 	}
 
-	
-	ssReq << settings.getOption(OPT_METHOD) << " / " << "HTTP/1.1\r\n"
-		<< "Host: " << _url.c_str() << "\n"
-		<< "User-Agent: magRestClient\n"
-		<< "Accept: */*\n"
-		<< "Connection: close\n" //Request that the server terminate the connection when it is done sending the response
+	PostThreadMessage(parentThread, SET_RESPONSE_TEXT, NULL, (LPARAM)THREAD_STATUS_WAITING);
+
+	//Build request string conforming to HTTP standards -> http://tools.ietf.org/html/rfc2616#section-14
+	ssReq << settings.getOption(OPTION_METHOD) << " / " << "HTTP/1.1\r\n"
+		<< "Host: " << _url.c_str() << "\r\n"
+		<< "User-Agent: cREST\r\n"
+		<< "Accept: */*\r\n"
+		<< "Connection: close\r\n" //Request that the server terminate the connection when it is done sending the response
 		<< "\r\n\r\n";
 	std::string readyToSendRequest = ssReq.str();
 
@@ -71,9 +71,19 @@ std::wstring WINAPI HTTPSocket::fireRequest(const OptionHandler& settings) {
 		return L"ERROR";
 	}
 
+	bool shouldPostInitialReceive = true;
+
 	while (recv(_sock, &buf, 1, NULL) > 0) {
+		if (shouldPostInitialReceive) {
+			PostThreadMessage(parentThread, SET_RESPONSE_TEXT, NULL, (LPARAM)THREAD_STATUS_RECEIVING_RESPONSE);
+			shouldPostInitialReceive = false;
+		}
 		ssRes << buf;
 	}
 
-	return ssRes.str();
+	//Build up formatted output to send to screen
+	ssOutput << "***REQUEST***\r\n\r\n" << ssReq.str().c_str() << "\n***RESPONSE***\r\n\r\n" 
+		<< ssRes.str().c_str() << "\r\n\r\n***END OF RESPONSE***";
+
+	return ssOutput.str();
 }

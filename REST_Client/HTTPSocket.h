@@ -29,7 +29,7 @@ public:
 	explicit WINAPI HTTPSocket(std::string url);
 	WINAPI ~HTTPSocket();
 	static const int PORT = 80;
-	std::wstring WINAPI fireRequest(const OptionHandler& settings);
+	std::wstring WINAPI fireRequest(const OptionHandler& settings, const DWORD parentThread);
 };
 
 #endif

@@ -1,3 +1,6 @@
+#ifndef __MAG_PROJECT_OPTIONHANDLER_H__
+#define __MAG_PROJECT_OPTIONHANDLER_H__
+
 #include <string>
 #include "constants.h"
 
@@ -11,6 +14,8 @@ public:
 	__stdcall OptionHandler();
 	void __stdcall setDefaults();
 	void __stdcall setOption(int optionID, std::string value);
-	const std::string& __stdcall getOption(int optionID) const;
-	const std::string& __stdcall getOption(int optionID);
+	const std::string __stdcall getOption(int optionID) const;
+	const std::string __stdcall getOption(int optionID);
 };
+
+#endif
