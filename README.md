@@ -11,10 +11,12 @@ Multithreaded REST client for Windows
 ##Usage
 * Select an HTTP method from the top left dialog (default is GET), enter your URL on the line directly below, then press ENTER or click the SEND button and watch the magic happen!
 * Currently only supports default paths ("/") and implies HTTP:
+
 ####OK:
   - www.foo.com
 	- foo.com
   - bar.foo.com
+
 ####Error (or client hang):
   - http://www.foo.com
   - https://www.foo.com
