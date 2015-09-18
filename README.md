@@ -11,18 +11,16 @@ Multithreaded REST client for Windows
 ##Usage
 * Select an HTTP method from the top left dialog (default is GET), enter your URL on the line directly below, then press ENTER or click the SEND button and watch the magic happen!
 * Currently only supports default paths ("/") and implies HTTP:
->###OK:
->* www.foo.com
->* foo.com
->* bar.foo.com
->### Error (or client hang):
->* http://www.foo.com
->* https://www.foo.com
->* www.foo.com/bar
->* www.foo.com?bar
->* www.foo.com#bar
-
->
+####OK:
+  - www.foo.com
+	- foo.com
+  - bar.foo.com
+####Error (or client hang):
+  - http://www.foo.com
+  - https://www.foo.com
+  - www.foo.com/bar
+  - www.foo.com?bar
+  - www.foo.com#bar
 
 ##Build
 * Open the solution in Visual Studio 15, and build the Release configuration, specifying x86 or x64 depending on your machine.
