@@ -10,17 +10,19 @@ Multithreaded REST client for Windows
 
 ##Usage
 * Select an HTTP method from the top left dialog (default is GET), enter your URL on the line directly below, then press ENTER or click the SEND button and watch the magic happen!
-* Currently only supports default paths ("/") and implies HTTP:
+* Supports http:// (default) and https://, although these are optional.
+* Sending an https request is possible, although you may not get the desired response due to any additional headers the server may require.
+* Does not support query strings or hash fragments (you will get a DNS lookup error).
 
 ####OK:
   - www.foo.com
 	- foo.com
   - bar.foo.com
+	- http://www.foo.com
+  - https://www.foo.com
+	- www.foo.com/bar
 
 ####Error (or client hang):
-  - http://www.foo.com
-  - https://www.foo.com
-  - www.foo.com/bar
   - www.foo.com?bar
   - www.foo.com#bar
 

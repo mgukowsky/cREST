@@ -24,9 +24,9 @@ private:
 	addrinfo *_client; //will be a linked list after call to getaddrinfo
 	addrinfo _hints;
 	bool _readyToFire;
-	std::string _url;
+	std::string _url, _port;
 public:
-	explicit WINAPI HTTPSocket(std::string url);
+	explicit WINAPI HTTPSocket(std::string url, std::string port = "http");
 	WINAPI ~HTTPSocket();
 	static const int PORT = 80;
 	std::wstring WINAPI fireRequest(const OptionHandler& settings, const DWORD parentThread);

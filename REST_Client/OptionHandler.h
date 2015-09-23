@@ -9,6 +9,7 @@ class OptionHandler {
 private:
 	struct _options {
 		std::string method;
+		std::string path;
 	} _settings;
 public:
 	__stdcall OptionHandler();

@@ -1,12 +1,12 @@
 #include "HTTPSocket.h"
 
-WINAPI HTTPSocket::HTTPSocket(std::string url) 
-	:_url(url)
+WINAPI HTTPSocket::HTTPSocket(std::string url, std::string port)
+	:_url(url), _port(port)
 {	
 	SecureZeroMemory(&_hints, sizeof(addrinfo));
 	SecureZeroMemory(&_client, sizeof(addrinfo));
 
-	int status = getaddrinfo(_url.c_str(), "http", &_hints, &_client);
+	int status = getaddrinfo(_url.c_str(), _port.c_str(), &_hints, &_client);
 
 	if (status != 0) {
 		std::cerr << "Error retrieving DNS information for " << _url << std::endl << "getaddrinfo error: " << gai_strerror(status) << std::endl;
@@ -58,7 +58,8 @@ std::wstring WINAPI HTTPSocket::fireRequest(const OptionHandler& settings, const
 	PostThreadMessage(parentThread, SET_RESPONSE_TEXT, NULL, (LPARAM)THREAD_STATUS_WAITING);
 
 	//Build request string conforming to HTTP standards -> http://tools.ietf.org/html/rfc2616#section-14
-	ssReq << settings.getOption(OPTION_METHOD) << " / " << "HTTP/1.1\r\n"
+	ssReq << settings.getOption(OPTION_METHOD) << " " << settings.getOption(OPTION_PATH) 
+		<< " HTTP/1.1\r\n"
 		<< "Host: " << _url.c_str() << "\r\n"
 		<< "User-Agent: cREST\r\n"
 		<< "Accept: */*\r\n"

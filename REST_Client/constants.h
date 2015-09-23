@@ -46,6 +46,7 @@ enum ControlIDs {
 
 enum OptionIDs {
 	OPTION_METHOD,
+	OPTION_PATH,
 	OPTION_TOTAL
 };
 

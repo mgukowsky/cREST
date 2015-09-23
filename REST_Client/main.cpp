@@ -46,11 +46,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 		//TODO: move these out of the main msg loop
 		if (Msg.message == SET_RESPONSE_TEXT) {
 			if (Msg.lParam == THREAD_STATUS_CONNECTING) {
-				SendMessage(vControls[AREA_RESPONSE], WM_SETTEXT, NULL, (LPARAM)L"Connecting...");
+				SendMessage(vControls[AREA_RESPONSE], WM_SETTEXT, NULL, (LPARAM)L"Connecting to server...");
 			} else if (Msg.lParam == THREAD_STATUS_WAITING) {
-				SendMessage(vControls[AREA_RESPONSE], WM_SETTEXT, NULL, (LPARAM)L"Waiting...");
+				SendMessage(vControls[AREA_RESPONSE], WM_SETTEXT, NULL, (LPARAM)L"Waiting for server response...");
 			} else if (Msg.lParam == THREAD_STATUS_RECEIVING_RESPONSE) {
-				SendMessage(vControls[AREA_RESPONSE], WM_SETTEXT, NULL, (LPARAM)L"Receiving response...");
+				SendMessage(vControls[AREA_RESPONSE], WM_SETTEXT, NULL, (LPARAM)L"Receiving server response...");
 			} else if (Msg.lParam == THREAD_STATUS_DONE && gThreadBool) {
 				SendMessage(vControls[AREA_RESPONSE], WM_SETTEXT, NULL, (LPARAM)gThreadResponse.c_str());
 				gThreadBool = false;
