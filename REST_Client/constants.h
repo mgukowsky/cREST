@@ -1,8 +1,8 @@
 #ifndef __MAG_PROJECT_CONSTANTS_H__
 #define __MAG_PROJECT_CONSTANTS_H__
 
-#define MASTER_WIDTH			1280
-#define MASTER_HEIGHT			720
+#define MASTER_WIDTH			700
+#define MASTER_HEIGHT			630
 
 #define IDC_SEND_BUTTON		101
 #define IDC_URL_ENTRY			102
