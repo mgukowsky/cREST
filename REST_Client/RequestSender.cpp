@@ -52,7 +52,9 @@ std::string WINAPI RequestSender::getPathAndFormat(std::string& url) {
 	} else if (url.substr(0, 8) == "https://") {
 		url = url.substr(8);
 		_port = "https";
-	} 
+	} else {
+		_port = "http";
+	}
 
 	std::size_t pathBegin = url.find('/');
 	std::string outputPath;
